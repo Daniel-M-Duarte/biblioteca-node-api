@@ -31,8 +31,13 @@ class AutorController {
   static cadastrarAutor = async (req, res, next) => {
     
     let autor = new autores(req.body);
-    
+    const { nome } = req.body;
+
     try {
+      const verificaNome = await autores.findOne({ nome });
+
+      if (verificaNome) return res.status(400).json({mensagem: `Autor(a) ${nome} já esta cadastrado no banco de dados com o ID ${verificaNome._id}`});
+      
       await autor.save();
       return res.status(201).json(autor);
       

@@ -14,9 +14,17 @@ const livroSchema = new mongoose.Schema(
     },
     editora: {
       type: String, 
-      required: [true, 'nome da editora é obrigatório']
+      required: [true, 'nome da editora é obrigatório'],
+      enum: {
+        values: ['CDC', 'L&PM', 'April'],
+        message: '{VALUE} não é permitido para editora'
+      }
     },
-    numeroPaginas: {type: Number}
+    numeroPaginas: {
+      type: Number,
+      min: [50, 'Numero de páginas deve estar entre 500 e 5000'],
+      max: [5000, 'Numero de páginas deve estar entre 500 e 5000']
+    }
   }
 );
 

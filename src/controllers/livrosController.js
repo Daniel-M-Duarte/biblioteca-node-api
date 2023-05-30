@@ -77,11 +77,16 @@ class LivroController {
     }
   };
 
-  static listarLivroPorEditora = async (req, res, next) => {
-    const editora = req.query.editora;
+  static listarLivroPorFiltro = async (req, res, next) => {
+    const { editora, titulo} = req.query;
+    const regex = RegExp(titulo, 'i');
+
+    const busca = {};
+    if (editora) busca.editora = editora;
+    if (titulo) busca.titulo = regex;
 
     try {
-      const result =  await livros.find({'editora': editora});
+      const result =  await livros.find(busca);
       return res.status(200).json(result);
 
     } catch (error) {
