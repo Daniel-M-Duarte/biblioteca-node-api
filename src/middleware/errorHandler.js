@@ -11,7 +11,7 @@ const errorHandler = ((error, req, res, next) => {
 
   else if (error instanceof mongoose.Error.ValidationError) return new ValidationError(error).enviarResposta(res);
 
-  else if( error instanceof NotFound) return new NotFound().enviarResposta(res);
+  else if( error instanceof ErrorBase)  error.enviarResposta(res);
 
   return new ErrorBase().enviarResposta(res);
   
